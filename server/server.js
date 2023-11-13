@@ -36,9 +36,10 @@ app.use('/api/v1/message', messageRouter);
 app.use(errorHandler);
 
 // <!-- Socket Io -->
-const io = new Server(httpServer, {
-  cors: corsOptions
-});
+const io = new Server(
+  httpServer
+  // {cors: corsOptions}
+);
 
 // <!-- Add User -->
 let users = [];
@@ -61,7 +62,7 @@ const userLogout = (userId) => {
   }
 };
 
-io.on('connection', (socket) => {  
+io.on('connection', (socket) => {
   console.log('Socket connected'.bgGreen);
 
   socket.on('addUser', (userInfo) => {
@@ -71,7 +72,7 @@ io.on('connection', (socket) => {
     const us = users.filter((u) => u.userId != userInfo._id);
     const con = 'new_user_add';
     for (let i = 0; us.length > i; i++) {
-      socket.to(us[i].socketId).emit('new_user_add', con); 
+      socket.to(us[i].socketId).emit('new_user_add', con);
     }
   });
 
