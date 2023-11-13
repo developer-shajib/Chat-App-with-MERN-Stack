@@ -1,5 +1,5 @@
 // allowed origin
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173', 'https://chat-app-with-mern-stack.vercel.app/login'];
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173', 'https://chat-app-with-mern-stack.vercel.app'];
 
 // cors options
 const corsOptions = {
