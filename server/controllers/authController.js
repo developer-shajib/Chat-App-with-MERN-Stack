@@ -140,5 +140,17 @@ export const logout = asyncHandler(async (req, res) => {
  * @access public
  */
 export const me = asyncHandler(async (req, res) => {
-  res.status(200).json({ user: req.me, message: 'Logged In user' });
+  //   <!-- create Token -->
+  const token = jwt.sign({ id: req.me._id, email: req.me.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN });
+
+  res
+    .status(200)
+    .cookie('accessToken', token, {
+      httpOnly: false,
+      secure: process.env.APP_ENV === 'Development' ? false : true,
+      sameSite: 'strict',
+      path: '/',
+      maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    })
+    .json({ user: req.me, message: 'Logged In user', token });
 });
