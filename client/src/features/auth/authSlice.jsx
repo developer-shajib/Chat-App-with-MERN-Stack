@@ -18,6 +18,9 @@ const authSlice = createSlice({
     setMessageEmpty: (state) => {
       state.successMessage = '';
       state.error = '';
+    },
+    setTokenEmpty: (state) => {
+      state.token = '';
     }
   },
   extraReducers: (build) => {
@@ -77,7 +80,7 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(logout.fulfilled, (state) => {
-        state.user = {};
+        state.user = '';
         state.isLoading = false;
         state.token = '';
       })
@@ -92,7 +95,7 @@ const authSlice = createSlice({
 export const getAllAuthData = (state) => state.auth;
 
 // <!-- export actions -->
-export const { setMessageEmpty } = authSlice.actions;
+export const { setMessageEmpty, setTokenEmpty } = authSlice.actions;
 
 // <!-- export reducer -->
 export default authSlice.reducer;

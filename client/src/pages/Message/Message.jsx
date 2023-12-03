@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUser, getSingleMessage, messageStatusChange, sendMessage } from '../../features/user/userApiSlice.jsx';
 import { clearNewUserAdded, getAllUsers, sendSocketMessage, setLogoutEmpty, setNewUserAdded, socketMessageStatusChange } from '../../features/user/userSlice.jsx';
-import { getAllAuthData, setMessageEmpty } from '../../features/auth/authSlice.jsx';
+import { getAllAuthData, setMessageEmpty, setTokenEmpty } from '../../features/auth/authSlice.jsx';
 import useFormFields from '../../hooks/useFormFields.jsx';
 import { io } from 'socket.io-client';
 import { createToast } from '../../utils/createToast.js';
@@ -70,7 +70,7 @@ const Message = () => {
     localStorage.removeItem('user');
     socket.emit('logout', user?._id);
     dispatch(setLogoutEmpty());
-
+    dispatch(setTokenEmpty());
     navigate('/login');
   };
 
