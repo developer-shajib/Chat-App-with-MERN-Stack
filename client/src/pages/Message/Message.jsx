@@ -21,6 +21,7 @@ import sendingSound from '../../assets/audio/sending.mp3';
 import { logout } from '../../features/auth/authApiSlice.jsx';
 import { useNavigate } from 'react-router-dom';
 const socket = io(import.meta.env.VITE_API_URI);
+import Cookies from 'js-cookie';
 
 const Message = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,8 @@ const Message = () => {
     localStorage.removeItem('user');
     socket.emit('logout', user?._id);
     dispatch(setLogoutEmpty());
+    Cookies.remove('accessToken');
+
     navigate('/login');
   };
 

@@ -71,13 +71,13 @@ export const register = asyncHandler(async (req, res) => {
   res
     .status(201)
     .cookie('accessToken', token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.APP_ENV === 'Development' ? false : true,
       sameSite: 'strict',
       path: '/',
       maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     })
-    .json({ user: createUser, message: 'User Create Done' });
+    .json({ user: createUser, message: 'User Create Done', token });
 });
 
 /**
@@ -114,13 +114,13 @@ export const login = asyncHandler(async (req, res) => {
   res
     .status(200)
     .cookie('accessToken', token, {
-      httpOnly: true,
+      httpOnly: false,
       secure: process.env.APP_ENV === 'Development' ? false : true,
       sameSite: 'strict',
       path: '/',
       maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     })
-    .json({ user, message: 'Login Success' });
+    .json({ user, message: 'Login Success', token });
 });
 
 /**

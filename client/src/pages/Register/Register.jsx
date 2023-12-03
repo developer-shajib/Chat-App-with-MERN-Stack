@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { getAllAuthData, setMessageEmpty } from '../../features/auth/authSlice.jsx';
 import { createToast } from '../../utils/createToast.js';
 import ScaleLoader from 'react-spinners/ScaleLoader';
+import Cookies from 'js-cookie';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Register = () => {
     image: ''
   });
   const navigate = useNavigate();
+  const token = Cookies.get('accessToken');
 
   // <!-- File Handle -->
   const fileHandle = (e) => {
@@ -60,13 +62,15 @@ const Register = () => {
         confirmPassword: '',
         image: ''
       });
+      Cookies.set('accessToken', token);
+
       navigate('/');
     }
     if (error) {
       createToast(error);
       dispatch(setMessageEmpty());
     }
-  }, [successMessage, error, dispatch, setInput, navigate]);
+  }, [successMessage, error, dispatch, setInput, navigate, token]);
 
   return (
     <>

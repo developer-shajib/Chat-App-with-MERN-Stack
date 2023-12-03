@@ -7,12 +7,14 @@ import useFormFields from '../../hooks/useFormFields.jsx';
 import { useEffect } from 'react';
 import { createToast } from '../../utils/createToast.js';
 import { login } from '../../features/auth/authApiSlice.jsx';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const { isLoading, successMessage, error } = useSelector(getAllAuthData);
   const { input, setInput, handleInputChange } = useFormFields({ email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const token = Cookies.get('accessToken');
 
   // <!-- Login Form Submit handler -->
   const handleFormSubmit = (e) => {
@@ -34,13 +36,14 @@ const Login = () => {
         confirmPassword: '',
         image: ''
       });
+      Cookies.set('accessToken', token);
       navigate('/');
     }
     if (error) {
       createToast(error);
       dispatch(setMessageEmpty());
     }
-  }, [successMessage, error, dispatch, setInput, navigate]);
+  }, [successMessage, error, dispatch, setInput, navigate, token]);
 
   return (
     <>
