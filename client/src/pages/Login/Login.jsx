@@ -10,11 +10,10 @@ import { login } from '../../features/auth/authApiSlice.jsx';
 import Cookies from 'js-cookie';
 
 const Login = () => {
-  const { isLoading, successMessage, error } = useSelector(getAllAuthData);
+  const { token, isLoading, successMessage, error } = useSelector(getAllAuthData);
   const { input, setInput, handleInputChange } = useFormFields({ email: '', password: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = Cookies.get('accessToken');
 
   // <!-- Login Form Submit handler -->
   const handleFormSubmit = (e) => {
@@ -26,6 +25,10 @@ const Login = () => {
   };
 
   useEffect(() => {
+    if (token) {
+      Cookies.set('accessToken', token);
+    }
+
     if (successMessage) {
       createToast(successMessage, 'success');
       dispatch(setMessageEmpty());
@@ -36,7 +39,7 @@ const Login = () => {
         confirmPassword: '',
         image: ''
       });
-      Cookies.set('accessToken', token);
+
       navigate('/');
     }
     if (error) {

@@ -6,7 +6,8 @@ const initialState = {
   user: {},
   isLoading: false,
   successMessage: '',
-  error: ''
+  error: '',
+  token: ''
 };
 
 // <!-- create auth slice -->
@@ -32,6 +33,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.successMessage = action.payload.message;
         state.isLoading = false;
+        state.token = action.payload?.token;
       })
       .addCase(register.rejected, (state, action) => {
         state.error = action.error.message;
@@ -47,6 +49,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.successMessage = action.payload.message;
         state.isLoading = false;
+        state.token = action.payload?.token;
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.error.message;
@@ -75,6 +78,7 @@ const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = {};
         state.isLoading = false;
+        state.token = '';
       })
       .addCase(logout.rejected, (state, action) => {
         state.error = action.error.message;

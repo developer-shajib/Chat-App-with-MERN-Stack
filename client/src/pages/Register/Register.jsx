@@ -12,7 +12,7 @@ import Cookies from 'js-cookie';
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { error, successMessage, isLoading } = useSelector(getAllAuthData);
+  const {token, error, successMessage, isLoading } = useSelector(getAllAuthData);
   const { input, setInput, handleInputChange } = useFormFields({
     userName: '',
     email: '',
@@ -21,7 +21,6 @@ const Register = () => {
     image: ''
   });
   const navigate = useNavigate();
-  const token = Cookies.get('accessToken');
 
   // <!-- File Handle -->
   const fileHandle = (e) => {
@@ -52,6 +51,10 @@ const Register = () => {
   };
 
   useEffect(() => {
+    if (token) {
+      Cookies.set('accessToken', token);
+    }
+
     if (successMessage) {
       createToast(successMessage, 'success');
       dispatch(setMessageEmpty());
@@ -62,7 +65,7 @@ const Register = () => {
         confirmPassword: '',
         image: ''
       });
-      Cookies.set('accessToken', token);
+     
 
       navigate('/');
     }
