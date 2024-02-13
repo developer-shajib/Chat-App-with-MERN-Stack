@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 // <!-- register user -->
 export const register = createAsyncThunk('auth/register', async (data) => {
@@ -15,7 +16,9 @@ export const register = createAsyncThunk('auth/register', async (data) => {
 // <!-- login user -->
 export const login = createAsyncThunk('auth/login', async (data) => {
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URI}/api/v1/auth/login`, data, { withCredentials: true });
+    const response = await axios.post(`${import.meta.env.VITE_API_URI}/api/v1/auth/login`, data, {
+      withCredentials: true
+    });
 
     return response.data;
   } catch (error) {
@@ -36,7 +39,12 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 // <!-- me user -->
 export const me = createAsyncThunk('auth/me', async () => {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_API_URI}/api/v1/auth/me`, { withCredentials: true });
+    const response = await axios.get(`${import.meta.env.VITE_API_URI}/api/v1/auth/me`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${Cookies.get('accessToken')}`
+      }
+    });
 
     return response.data;
   } catch (error) {

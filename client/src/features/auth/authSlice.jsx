@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login, logout, me, register } from './authApiSlice.jsx';
+import Cookies from 'js-cookie';
 
 // <!-- Initial State -->
 const initialState = {
@@ -7,7 +8,7 @@ const initialState = {
   isLoading: false,
   successMessage: '',
   error: '',
-  token: ''
+  token: Cookies.get('accessToken') || null
 };
 
 // <!-- create auth slice -->
@@ -36,7 +37,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.successMessage = action.payload.message;
         state.isLoading = false;
-        state.token = action.payload?.token;
+        Cookies.set('accessToken', action?.payload?.token, { expires: 7, path: '/', secure: true });
       })
       .addCase(register.rejected, (state, action) => {
         state.error = action.error.message;
@@ -52,7 +53,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.successMessage = action.payload.message;
         state.isLoading = false;
-        state.token = action.payload?.token;
+        Cookies.set('accessToken', action?.payload?.token, { expires: 7, path: '/', secure: true });
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.error.message;

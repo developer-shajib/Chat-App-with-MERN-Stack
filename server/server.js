@@ -37,8 +37,9 @@ app.use(errorHandler);
 
 // <!-- Socket Io -->
 const io = new Server(
-  httpServer
-  // {cors: corsOptions}
+  httpServer,
+  { cors: '*' }
+  // {cors: corsOptions},
 );
 
 // <!-- Add User -->
