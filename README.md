@@ -31,7 +31,7 @@
 
 #### Live Demo:
 
-[Live Demo Link](https://chat-app-with-mern-stack.vercel.app)
+[Live Demo Link](https://chat-app-with-mern-eta.vercel.app)
 
 #### Video Demo:
 
